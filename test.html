@@ -16,7 +16,7 @@
 	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
  	
-	<script src="http://d3js.org/d3.v3.min.js"></script>
+	 <script src="http://d3js.org/d3.v3.min.js"></script>
 	<script src="http://d3js.org/topojson.v1.min.js"></script>
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
@@ -35,257 +35,25 @@
 		</div>
 	</div>
 
+
+	<script src="map.js"></script>
 	<script>
 
 	var width = 960,
 		height = 1160;
 
-	var svg = d3.select("#map").append("svg")
-		.attr("width", width)
-		.attr("height", height);
+	map = new Map(width, height);
 
-	var projection = d3.geo.mercator()
-		.center([115, 0])
-		.rotate([0, 5])
-		.scale(800)
-		.translate([width / 2, height / 2]);
-
-	var path = d3.geo.path()
-		.projection(projection);
+	map.init("#map");
 
 	d3.json("json/se_asia.json", function(error, se_asia) {
 		if (error) return console.error(error);
+		map.addJson(se_asia);
 
-		var subunits = topojson.feature(se_asia, se_asia.objects.subunits);
-
-
-
-		svg.selectAll(".subunit")
-				.data(topojson.feature(se_asia, se_asia.objects.subunits).features)
-			.enter().append("path")
-				.attr("class", function(d) { return "subunit " + d.id; })
-				.attr("d", path);
-
-		svg.append("path")
-			.datum(topojson.mesh(se_asia, se_asia.objects.subunits, function(a, b) { return a !== b }))
-			.attr("d", path)
-			.attr("class", "subunit-boundary");
-
-		drawPlaces();
-
+		d3.json("json/places.json", function(error, json) {
+			map.addPlaces(json.places);
+		});
 	});
-
-	var places = [];
-	var routes = [];
-	var lastPlace = null;
-
-	var addPlaces = function(newPlaces) {
-		var newPlace = newPlaces.shift();
-		
-		addPlace(newPlace);
-
-		if(lastPlace != null){
-			addRoute(lastPlace, newPlace);
-		};
-
-		lastPlace = newPlace;
-
-		if(newPlaces.length > 0) {
-			setTimeout(function() {
-				addPlaces(newPlaces)
-			}, 1000);
-		}
-	};
-
-	var addPlace = function(place) {
-		places.push(place);
-
-		svg.selectAll(".place")
-			.data(places, function (d) { return d.id; })
-			.enter().append("circle", ".place")
-			.attr("r", 2)
-			.attr("transform", function(d) {
-				return "translate(" + projection([
-					d.location.longitude,
-					d.location.latitude
-				]) + ")"
-			})
-			.attr("id", function(d) {
-				return d.id;
-			});
-
-
-	};
-
-	var addRoute = function(lastPlace, newPlace) {
-		lastPlaceCoords = projection(
-			[
-				lastPlace.location.longitude,
-				lastPlace.location.latitude
-			]
-		);
-		newPlaceCoords = projection(
-			[
-				newPlace.location.longitude,
-				newPlace.location.latitude
-			]
-		);
-
-		route = {
-			id: lastPlace.id + "->" + newPlace.id,
-			lastPlaceCoords: lastPlaceCoords,
-			newPlaceCoords: newPlaceCoords
-		}
-
-
-		routes.push(route)
-
-		svg.selectAll(".route")
-			.data(routes, function (d) { return d.id; })
-			.enter().append("path", ".route")
-			.attr("d", function(d) {
-				var path = "M " + d.lastPlaceCoords[0] + " " + d.lastPlaceCoords[1] + " L " + d.newPlaceCoords[0] + " " + d.newPlaceCoords[1];
-				return path;
-			})
-			.attr("id", function(d) {
-				return d.id;
-			})
-			.attr("stroke", "grey")
-			.attr("stroke-width", "2");
-	};
-
-	var drawPlaces = function() {
-
-		// Get places from server
-		var newPlaces = [
-			{
-				id: "bangkok-thailand",
-				name: "Bangkok, Thailand",
-				location: {
-					latitude: 13.7278956,
-					longitude : 100.5241235
-				}
-			},
-			{
-				id: "chiang-mai-thailand",
-				name: "Chiang Mai, Thailand",
-				location: {
-					latitude: 18.787747,
-					longitude: 98.99312839999999
-				}
-			},
-			{
-				id: "chiang-kong-thailand",
-				name: "Chiang Kong, Thailand",
-				location: {
-					latitude: 18.2826948,
-					longitude : 100.8677256
-				}
-			},
-			{
-				id: "pak-beng-laos",
-				name: "Pak Beng, Laos",
-				location: {
-					latitude : 19.89898,
-					longitude : 101.1419185
-				}
-			},
-			{
-				id: "vang-vieng-laos",
-				name: "Vang Vieng, Laos",
-				location: {
-					latitude : 18.933333,
-					longitude : 102.45
-				}
-			},
-			{
-				id: "don-det-laos",
-				name: "Don Det, Laos",
-				location: {
-					latitude : 13.975873,
-					longitude : 105.9200531
-				}
-			},
-			{
-				id: "phnom-penh-cambodia",
-				name: "Phnom Penh, Cambodia",
-				location: {
-					latitude : 11.5448729,
-					longitude : 104.8921668
-				}
-			},
-			{
-				id: "siem-reap-cambodia",
-				name: "Siem Reap, Cambodia",
-				location: {
-					latitude : 13.6915377,
-					longitude : 104.1001326
-				}
-			},
-			{
-				id: "bangkok-thailand",
-				name: "Bangkok, Thailand",
-				location: {
-					latitude: 13.7278956,
-					longitude : 100.5241235
-				}
-			},
-			{
-				id: "ko-pha-ngan-thailand",
-				name: "Ko Pha Ngan, Thailand",
-				location: {
-					latitude: 9.731875299999999,
-					longitude : 100.0135929
-				}
-			},
-			{
-				id: "ko-samui-thailand",
-				name: "Ko Samui, Thailand",
-				location: {
-					latitude : 9.5120168,
-					longitude : 100.0135929
-				}
-			},
-			{
-				id: "ko-lanta-thailand",
-				name: "Ko Lanta, Thailand",
-				location: {
-					latitude : 7.624367699999999,
-					longitude : 99.0792263
-				}
-			},
-			{
-				id: "hat-yai-thailand",
-				name: "Hat Yai, Thailand",
-				location: {
-					latitude : 7.0086472,
-					longitude : 100.4746879
-				}
-			},
-			{
-				id: "kuala-lumpur-malaysia",
-				name: "Kuala Lumpur, Malaysia",
-				location: {
-					latitude : 3.139003,
-					longitude : 101.686855
-				}
-			},
-			{
-				id: "singapore-singapre",
-				name: "Singapore",
-				location: {
-					latitude : 1.352083,
-					longitude : 103.819836
-				}
-			},
-
-		]
-
-		addPlaces(newPlaces)
-
-
-	};
-
 
 	</script>
 </body>

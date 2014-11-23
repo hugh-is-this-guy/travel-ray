@@ -1,0 +1,124 @@
+{
+	"places": [
+		{
+			"id": "bangkok-thailand",
+			"name": "Bangkok, Thailand",
+			"location": {
+				"latitude": 13.7278956,
+				"longitude" : 100.5241235
+			}
+		},
+		{
+			"id": "chiang-mai-thailand",
+			"name": "Chiang Mai, Thailand",
+			"location": {
+				"latitude": 18.787747,
+				"longitude": 98.99312839999999
+			}
+		},
+		{
+			"id": "chiang-kong-thailand",
+			"name": "Chiang Kong, Thailand",
+			"location": {
+				"latitude": 18.2826948,
+				"longitude" : 100.8677256
+			}
+		},
+		{
+			"id": "pak-beng-laos",
+			"name": "Pak Beng, Laos",
+			"location": {
+				"latitude" : 19.89898,
+				"longitude" : 101.1419185
+			}
+		},
+		{
+			"id": "vang-vieng-laos",
+			"name": "Vang Vieng, Laos",
+			"location": {
+				"latitude" : 18.933333,
+				"longitude" : 102.45
+			}
+		},
+		{
+			"id": "don-det-laos",
+			"name": "Don Det, Laos",
+			"location": {
+				"latitude" : 13.975873,
+				"longitude" : 105.9200531
+			}
+		},
+		{
+			"id": "phnom-penh-cambodia",
+			"name": "Phnom Penh, Cambodia",
+			"location": {
+				"latitude" : 11.5448729,
+				"longitude" : 104.8921668
+			}
+		},
+		{
+			"id": "siem-reap-cambodia",
+			"name": "Siem Reap, Cambodia",
+			"location": {
+				"latitude" : 13.6915377,
+				"longitude" : 104.1001326
+			}
+		},
+		{
+			"id": "bangkok-thailand-2",
+			"name": "Bangkok, Thailand",
+			"location": {
+				"latitude": 13.7278956,
+				"longitude" : 100.5241235
+			}
+		},
+		{
+			"id": "ko-pha-ngan-thailand",
+			"name": "Ko Pha Ngan, Thailand",
+			"location": {
+				"latitude": 9.731875299999999,
+				"longitude" : 100.0135929
+			}
+		},
+		{
+			"id": "ko-samui-thailand",
+			"name": "Ko Samui, Thailand",
+			"location": {
+				"latitude" : 9.5120168,
+				"longitude" : 100.0135929
+			}
+		},
+		{
+			"id": "ko-lanta-thailand",
+			"name": "Ko Lanta, Thailand",
+			"location": {
+				"latitude" : 7.624367699999999,
+				"longitude" : 99.0792263
+			}
+		},
+		{
+			"id": "hat-yai-thailand",
+			"name": "Hat Yai, Thailand",
+			"location": {
+				"latitude" : 7.0086472,
+				"longitude" : 100.4746879
+			}
+		},
+		{
+			"id": "kuala-lumpur-malaysia",
+			"name": "Kuala Lumpur, Malaysia",
+			"location": {
+				"latitude" : 3.139003,
+				"longitude" : 101.686855
+			}
+		},
+		{
+			"id": "singapore-singapore",
+			"name": "Singapore",
+			"location": {
+				"latitude" : 1.352083,
+				"longitude" : 103.819836
+			}
+		}
+	]
+}
