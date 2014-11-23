@@ -129,7 +129,6 @@ var Map = (function () {
 				.attr("stroke-width", "2")
 				.attr("stroke-dasharray", length + " " + length)
 				.attr("stroke-dashoffset", length)
-				.attr("fill", "none")
 				.transition().ease(d3.ease('cubic'))
 				.duration(750)
 				.delay(delay)
@@ -158,60 +157,49 @@ var Map = (function () {
 		);
 
 		this.calculateCoordinates();
-		this.findControlCoords();
 	};
 
 	Route.prototype.calculateCoordinates = function() {
-		// var height = this.fromCoords[0] - this.toCoords[0];
-		// var width = this.fromCoords[1] - this.toCoords[1];
+		var height = this.fromCoords[0] - this.toCoords[0];
+		var width = this.fromCoords[1] - this.toCoords[1];
 
-		// var length = Math.sqrt(Math.pow(height, 2) + Math.pow(width, 2));
-		// var angle = Math.acos(width / length);
+		var length = Math.sqrt(Math.pow(height, 2) + Math.pow(width, 2));
+		var angle = Math.acos(width / length);
 
-		// var verticalReduction = Math.abs(Math.sin(angle) * 5);
-		// var horizontalReduction = Math.abs(Math.cos(angle) * 5);
+		var verticalReduction = Math.abs(Math.sin(angle) * 5);
+		var horizontalReduction = Math.abs(Math.cos(angle) * 5);
 
 
-		// if (height < 0) {
-		// 	verticalReduction = verticalReduction * -1;
-		// }
+		if (height < 0) {
+			verticalReduction = verticalReduction * -1;
+		}
 
-		// if (width < 0) {
-		// 	horizontalReduction = horizontalReduction * -1;
-		// }
+		if (width < 0) {
+			horizontalReduction = horizontalReduction * -1;
+		}
 
-		// this.toCoords = [
-		// 	this.toCoords[0] + verticalReduction, 
-		// 	this.toCoords[1] + horizontalReduction
-		// ];
+		this.toCoords = [
+			this.toCoords[0] + verticalReduction, 
+			this.toCoords[1] + horizontalReduction
+		];
 
-		// this.fromCoords = [
-		// 	this.fromCoords[0] - verticalReduction, 
-		// 	this.fromCoords[1] - horizontalReduction
-		// ];
+		this.fromCoords = [
+			this.fromCoords[0] - verticalReduction, 
+			this.fromCoords[1] - horizontalReduction
+		];
 
 	};
-
-	Route.prototype.findControlCoords = function() {
-		var s60 = Math.sin(60 * Math.PI / 180.0);    
-		var c60 = Math.cos(60 * Math.PI / 180.0);
-
-		this.control = [(c60 * (this.fromCoords[0] - this.toCoords[0]) - s60 * (this.fromCoords[1] - this.toCoords[1]) + this.toCoords[0]),
-		(s60 * (this.fromCoords[0] - this.toCoords[0]) + c60 * (this.fromCoords[1] - this.toCoords[1]) + this.toCoords[1])]
-
-		return;
-	}
 
 	Route.prototype.getLength = function() {
 		var height = Math.abs(this.fromCoords[0] - this.toCoords[0]);
 		var width = Math.abs(this.fromCoords[1] - this.toCoords[1]);
-		return 1.5 * (Math.sqrt(Math.pow(height, 2) + Math.pow(width, 2)));
+		return Math.sqrt(Math.pow(height, 2) + Math.pow(width, 2));
 	};
 
 
 
 	Route.prototype.getPath = function() {
-		var path = "M " + this.fromCoords[0] + " " + this.fromCoords[1] + " Q " + this.control[0] + " " + this.control[1] + " " + this.toCoords[0] + " " + this.toCoords[1];
+		var path = "M " + this.fromCoords[0] + " " + this.fromCoords[1] + " L " + this.toCoords[0] + " " + this.toCoords[1];
 		return path;
 	};
 
